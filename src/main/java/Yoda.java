@@ -1,8 +1,10 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Yoda {
     public static void main(String[] args) {
         final String name = "Yoda";
+        ArrayList<String> tasks = new ArrayList<>();
 
         System.out.println("""
                 _______________________
@@ -20,14 +22,23 @@ public class Yoda {
             if (input.equalsIgnoreCase("bye")) {
                 isRunning = false;
                 break;
+            } else if (input.equalsIgnoreCase("list")) {
+                int num = 1;
+                for (String task : tasks) {
+                    System.out.println("_______________________");
+                    System.out.println(num + ". " + task);
+                    num++;
+                }
             } else {
                 System.out.println("_______________________");
-                System.out.println(input);
+                System.out.println("added: " + input);
+                System.out.println("_______________________");
+                tasks.add(input);
             }
         }
-
-
         System.out.println("Bye. See you again!");
         scanner.close();
     }
 }
+
+
