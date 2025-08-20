@@ -20,7 +20,6 @@ public class Yoda {
             String line = scanner.nextLine().trim();
             if (line.isEmpty()) continue;
 
-            // tokenise once
             String[] parts = line.split("\\s+", 2);
             String cmd = parts[0].toLowerCase();
             String arg = (parts.length > 1) ? parts[1].trim() : "";
@@ -108,10 +107,23 @@ public class Yoda {
                     }
                     break;
 
+                    case "delete": {
+                        if (arg.isEmpty()) throw new IllegalArgumentException("Delete what item, do you want?");
+                        int idx = Integer.parseInt(arg) - 1;
+                        if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException();
+                        Task deleted = tasks.get(idx);
+                        tasks.remove(idx);
+                        printLine();
+                        System.out.println("Deleted this task, I have:\n" + deleted);
+                        printLine();
+                    }
+                    break;
+
                     default:
                         // for any other unknown inputs like blah blah
                         printLine();
                         System.out.println("What you are trying to say, I do not understand.");
+                        printLine();
                 }
             } catch (NumberFormatException e) {
                 printLine();
