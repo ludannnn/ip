@@ -9,6 +9,11 @@ public class ToDoTask extends Task {
     public String toString(){
         return "[T]" + "[" + this.getStatusIcon() + "] " + this.description;
     }
+
+    @Override
+    public String toSaveLine() {
+        return "T | " + (isDone ? 1 : 0) + " | " + description;
+    }
 }
 
 
