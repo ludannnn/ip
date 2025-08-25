@@ -4,7 +4,8 @@ import java.util.Scanner;
 public class Yoda {
     public static void main(String[] args) {
         final String name = "Yoda";
-        ArrayList<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage();
+        ArrayList<Task> tasks = storage.load();
 
         System.out.println("""
                 _______________________
@@ -48,17 +49,19 @@ public class Yoda {
                         printLine();
                         System.out.println("Marked this task as done, I have:\n" + tasks.get(idx));
                         printLine();
+                        storage.save(tasks);
                     }
                     break;
 
                     case "unmark": {
-                        if (arg.isEmpty()) throw new IllegalArgumentException("Unark what item, do you want?");
+                        if (arg.isEmpty()) throw new IllegalArgumentException("Unmark what item, do you want?");
                         int idx = Integer.parseInt(arg) - 1;
                         if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException();
                         tasks.get(idx).markNotDone();
                         printLine();
                         System.out.println("not done yet, is this task:\n" + tasks.get(idx));
                         printLine();
+                        storage.save(tasks);
                     }
                     break;
 
@@ -71,6 +74,7 @@ public class Yoda {
                         System.out.println((tasks.size() + 1) + " tasks in the list," + " Now you have.");
                         printLine();
                         tasks.add(t);
+                        storage.save(tasks);
                     }
                     break;
 
@@ -86,6 +90,7 @@ public class Yoda {
                         System.out.println((tasks.size() + 1) + " tasks in the list," + " Now you have.");
                         printLine();
                         tasks.add(t);
+                        storage.save(tasks);
                     }
                     break;
 
@@ -104,6 +109,7 @@ public class Yoda {
                         System.out.println((tasks.size() + 1) + " tasks in the list," + " Now you have.");
                         printLine();
                         tasks.add(t);
+                        storage.save(tasks);
                     }
                     break;
 
@@ -116,6 +122,7 @@ public class Yoda {
                         printLine();
                         System.out.println("Deleted this task, I have:\n" + deleted);
                         printLine();
+                        storage.save(tasks);
                     }
                     break;
 

@@ -10,4 +10,9 @@ public class DeadlineTask extends Task{
     public String toString(){
         return "[D]" + "[" + this.getStatusIcon() + "] " + this.description + " (by: " + this.deadline + ")";
     }
+
+    @Override
+    public String toSaveLine() {
+        return "D | " + (isDone ? 1 : 0) + " | " + description + " | " + deadline;
+    }
 }
