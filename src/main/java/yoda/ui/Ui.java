@@ -1,4 +1,8 @@
+package yoda.ui;
+
 import java.util.Scanner;
+import yoda.task.Task;
+import yoda.task.TaskList;
 
 public class Ui {
     private final Scanner scanner;

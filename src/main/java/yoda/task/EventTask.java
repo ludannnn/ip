@@ -1,27 +1,31 @@
+package yoda.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
-public class DeadlineTask extends Task {
-    private final String deadlinePretty;
-    private final String deadlineIso;
+public class EventTask extends Task {
+    private final String startPretty;
+    private final String endPretty;
+    private final String startIso;
+    private final String endIso;
 
     private static final DateTimeFormatter OUT_DATE =
             DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH);
     private static final DateTimeFormatter OUT_DATETIME =
             DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm", Locale.ENGLISH);
 
-    // accepted date-only inputs
+    //for date-only inputs
     private static final DateTimeFormatter[] DATE_PATTERNS = new DateTimeFormatter[] {
             DateTimeFormatter.ISO_LOCAL_DATE,               // 2019-12-02
             DateTimeFormatter.ofPattern("d/M/uuuu"),        // 2/12/2019
             DateTimeFormatter.ofPattern("d-M-uuuu"),        // 2-12-2019
-            DateTimeFormatter.ofPattern("MMM d uuuu", Locale.ENGLISH) // Dec 2 2019 (for old saved data, optional)
+            DateTimeFormatter.ofPattern("MMM d uuuu", Locale.ENGLISH)
     };
 
-    // accepted date+time inputs
+    //for date+time inputs
     private static final DateTimeFormatter[] DATETIME_PATTERNS = new DateTimeFormatter[] {
             DateTimeFormatter.ISO_LOCAL_DATE_TIME,          // 2019-12-02T18:00
             DateTimeFormatter.ofPattern("d/M/uuuu HHmm"),   // 2/12/2019 1800
@@ -31,33 +35,55 @@ public class DeadlineTask extends Task {
             DateTimeFormatter.ofPattern("MMM d uuuu, HH:mm", Locale.ENGLISH) // Dec 2 2019, 18:00
     };
 
-    public DeadlineTask(String desc, String deadlineInput) {
+    public EventTask(String desc, String startInput, String endInput) {
         super(desc);
 
-        if (deadlineInput == null || deadlineInput.isBlank()) {
-            this.deadlinePretty = "—";
-            this.deadlineIso = "";
-            return;
-        }
+        String[] s = parseAny(startInput);
+        this.startPretty = s[0];
+        this.startIso = s[1];
 
-        LocalDateTime ldt = tryParseDateTime(deadlineInput);
-        if (ldt != null) {
-            this.deadlinePretty = ldt.format(OUT_DATETIME);
-            this.deadlineIso = ldt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME); // 2019-12-02T18:00
-            return;
-        }
-
-        LocalDate ld = tryParseDate(deadlineInput);
-        if (ld != null) {
-            this.deadlinePretty = ld.format(OUT_DATE);
-            this.deadlineIso = ld.format(DateTimeFormatter.ISO_LOCAL_DATE); // 2019-12-02
-            return;
-        }
-
-        throw new IllegalArgumentException("Description and deadline, please tell");
+        String[] e = parseAny(endInput);
+        this.endPretty = e[0];
+        this.endIso = e[1];
     }
 
-    public DeadlineTask(String desc) { this(desc, ""); }
+    @Override
+    public String toString(){
+        return "[E]" + "[" + this.getStatusIcon() + "] " + this.description +
+                " (from: " + this.startPretty + " to: " + this.endPretty + ")";
+    }
+
+    @Override
+    public String toSaveLine() {
+        return "E | " + (isDone ? 1 : 0) + " | " + description + " | " + startIso + " | " + endIso;
+    }
+
+    //helper functions
+
+    // returns {pretty, iso}; throws if cannot parse
+    private static String[] parseAny(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("Description, start and end, please tell");
+        }
+
+        LocalDateTime ldt = tryParseDateTime(input);
+        if (ldt != null) {
+            return new String[] {
+                    ldt.format(OUT_DATETIME),
+                    ldt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)   // 2019-12-02T18:00
+            };
+        }
+
+        LocalDate ld = tryParseDate(input);
+        if (ld != null) {
+            return new String[] {
+                    ld.format(OUT_DATE),
+                    ld.format(DateTimeFormatter.ISO_LOCAL_DATE)         // 2019-12-02
+            };
+        }
+
+        throw new IllegalArgumentException("Description, start and end, please tell");
+    }
 
     private static LocalDateTime tryParseDateTime(String s) {
         for (DateTimeFormatter f : DATETIME_PATTERNS) {
@@ -71,15 +97,5 @@ public class DeadlineTask extends Task {
             try { return LocalDate.parse(s, f); } catch (DateTimeParseException ignored) {}
         }
         return null;
-    }
-
-    @Override
-    public String toString(){
-        return "[D][" + this.getStatusIcon() + "] " + this.description + " (by: " + this.deadlinePretty + ")";
-    }
-
-    @Override
-    public String toSaveLine() {
-        return "D | " + (isDone ? 1 : 0) + " | " + description + " | " + deadlineIso;
     }
 }

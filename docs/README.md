@@ -1,4 +1,4 @@
-# Yoda User Guide
+# yoda.Yoda User Guide
 
 // Update the title above to match the actual product name
 
