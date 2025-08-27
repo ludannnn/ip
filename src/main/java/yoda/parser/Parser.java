@@ -1,3 +1,5 @@
+package yoda.parser;
+
 public class Parser {
 
     public static Command parse(String line) {

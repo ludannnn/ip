@@ -1,3 +1,5 @@
+package yoda.parser;
+
 public class Command {
     public enum Type { BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, UNKNOWN }
 
