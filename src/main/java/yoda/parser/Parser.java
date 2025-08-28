@@ -1,7 +1,23 @@
 package yoda.parser;
 
+/** Parses user input lines into objects. */
 public class Parser {
 
+    /**
+     * Parses a raw input line into a command.
+     * Recognized forms:
+     * - bye
+     * - list
+     * - todo <desc>
+     * - deadline <desc> /by <when>
+     * - event <desc> /from <start> /to <end>
+     * - mark <n>, unmark <n>, delete <n>   (1-based index)
+     *
+     * @param line the raw input (leading/trailing spaces allowed)
+     * @return a {@link Command}; {@link Command.Type#UNKNOWN} for unrecognized input
+     * @throws IllegalArgumentException for known commands with missing parts
+     * @throws NumberFormatException if an index argument is not a number
+     */
     public static Command parse(String line) {
         if (line.isBlank()) return Command.unknown();
 

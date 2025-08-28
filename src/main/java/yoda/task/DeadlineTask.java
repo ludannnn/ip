@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+/** A task with a deadline; stores both pretty and ISO forms of the date/time. */
 public class DeadlineTask extends Task {
     private final String deadlinePretty;
     private final String deadlineIso;
@@ -33,6 +34,13 @@ public class DeadlineTask extends Task {
             DateTimeFormatter.ofPattern("MMM d uuuu, HH:mm", Locale.ENGLISH) // Dec 2 2019, 18:00
     };
 
+    /**
+     * Creates a deadline task and parses the given input as date or date-time.
+     * If the input is blank, the deadline is treated as absent.
+     * @param desc task description
+     * @param deadlineInput user-entered date/time
+     * @throws IllegalArgumentException if a non-blank input cannot be parsed
+     */
     public DeadlineTask(String desc, String deadlineInput) {
         super(desc);
 
@@ -75,11 +83,20 @@ public class DeadlineTask extends Task {
         return null;
     }
 
+    /**
+     * Returns the display form, e.g. "[D][ ] task (by: Dec 2 2019, 18:00)" or "(by: —)" if absent.
+     * @return formatted string for UI display
+     */
     @Override
     public String toString(){
         return "[D][" + this.getStatusIcon() + "] " + this.description + " (by: " + this.deadlinePretty + ")";
     }
 
+    /**
+     * Serializes this task to a single save line:
+     * D | <0|1> | <desc> | <deadline-ISO-or-empty>
+     * @return pipe-separated save line
+     */
     @Override
     public String toSaveLine() {
         return "D | " + (isDone ? 1 : 0) + " | " + description + " | " + deadlineIso;

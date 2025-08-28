@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+
+/** A task that spans a start and end date/time with pretty/ISO representations. */
 public class EventTask extends Task {
     private final String startPretty;
     private final String endPretty;
@@ -35,6 +37,13 @@ public class EventTask extends Task {
             DateTimeFormatter.ofPattern("MMM d uuuu, HH:mm", Locale.ENGLISH) // Dec 2 2019, 18:00
     };
 
+    /**
+     * Creates an event with start and end date/time.
+     * @param desc description of the event
+     * @param startInput start date/time string
+     * @param endInput end date/time string
+     * @throws IllegalArgumentException if either input is blank or cannot be parsed
+     */
     public EventTask(String desc, String startInput, String endInput) {
         super(desc);
 
@@ -47,12 +56,21 @@ public class EventTask extends Task {
         this.endIso = e[1];
     }
 
+    /**
+     * Returns the display form, e.g. "[E][ ] meeting (from: Dec 2 2019, 18:00 to: Dec 2 2019, 20:00)".
+     * @return formatted string for UI display
+     */
     @Override
     public String toString(){
         return "[E]" + "[" + this.getStatusIcon() + "] " + this.description +
                 " (from: " + this.startPretty + " to: " + this.endPretty + ")";
     }
 
+    /**
+     * Serializes this event to a single save line:
+     * E | <0|1> | <desc> | <start-ISO> | <end-ISO>
+     * @return pipe-separated save line
+     */
     @Override
     public String toSaveLine() {
         return "E | " + (isDone ? 1 : 0) + " | " + description + " | " + startIso + " | " + endIso;
@@ -60,7 +78,12 @@ public class EventTask extends Task {
 
     //helper functions
 
-    // returns {pretty, iso}; throws if cannot parse
+    /**
+     * Parses a date/time string into pretty and ISO forms.
+     * @param input input string to parse
+     * @return array of length 2: [pretty, iso]
+     * @throws IllegalArgumentException if input is blank or unparsable
+     */
     private static String[] parseAny(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("Description, start and end, please tell");

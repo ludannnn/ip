@@ -18,6 +18,9 @@ public class Yoda {
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Creates a Yoda instance
+     */
     public Yoda() {
         this.ui = new Ui(new Scanner(System.in));
         this.storage = new Storage();
@@ -25,6 +28,10 @@ public class Yoda {
         this.tasks = new TaskList(loaded);
     }
 
+    /**
+     * Starts the task manager application.
+     * Loads existing tasks, shows welcome message, and enters main loop.
+     */
     public void run() {
         ui.showWelcome();
         boolean running = true;
@@ -114,7 +121,12 @@ public class Yoda {
     }
 
 
-
+    /**
+     * Starts the Yoda task manager.
+     * Creates a Yoda instance and runs the application.
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         new Yoda().run();
     }
