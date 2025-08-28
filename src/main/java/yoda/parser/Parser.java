@@ -75,6 +75,11 @@ public class Parser {
             return Command.delete(idx);
         }
 
+        case "find": {
+            if (arg.isEmpty()) throw new IllegalArgumentException("Find what keyword, do you want?");
+            return Command.find(arg);
+        }
+
         default:
             return Command.unknown();
         }

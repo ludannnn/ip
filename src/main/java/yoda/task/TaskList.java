@@ -86,4 +86,21 @@ public class TaskList {
     public ArrayList<Task> asList() {
         return tasks;
     }
+
+    /**
+     * Returns the list of tasks matching the keyword.
+     *
+     * @return TaskList where all tasks match keyword
+     */
+    public TaskList find(String keyword) {
+        String q = keyword.toLowerCase();
+        List<Task> results = new ArrayList<>();
+        for (Task t : tasks) {
+            // match on description only
+            if (t.description.toLowerCase().contains(q)) {
+                results.add(t);
+            }
+        }
+        return new TaskList(results);
+    }
 }
