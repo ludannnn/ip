@@ -7,14 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 import yoda.task.Task;
 
-
+/** Loads and saves tasks to a UTF-8 text file (data/yoda.txt). */
 public class Storage {
     private final Path file;
 
+
+    /** Creates a storage that uses the file at data/yoda.txt. */
     public Storage() {
         this.file = Paths.get("data", "yoda.txt");
     }
 
+
+    /**
+     * Loads tasks from disk.
+     * Creates the file and its parent directory if missing, then returns an empty list.
+     *
+     * @return a mutable list of tasks; never null
+     */
     public ArrayList<Task> load() {
         try {
             if (Files.notExists(file)) {
@@ -35,6 +44,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves all tasks to disk, overwriting existing contents.
+     *
+     * @param tasks tasks to write; order is preserved
+     */
     public void save(List<Task> tasks) {
         try {
             List<String> lines = new ArrayList<>();
