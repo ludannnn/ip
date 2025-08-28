@@ -45,9 +45,13 @@ public class Command {
         return new Command(Type.UNMARK, null, null, null, null, idx);
     }
 
+    public static Command find(String q) {
+        return new Command(Type.FIND, q, null, null, null, null);
+    }
+
     public static Command delete(int idx) {
         return new Command(Type.DELETE, null, null, null, null, idx);
     }
 
-    public enum Type {BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, UNKNOWN}
+    public enum Type {BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN}
 }

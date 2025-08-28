@@ -132,6 +132,15 @@ public class Ui {
         System.out.println("Farewell, I bid you.");
     }
 
+    public void showMatches(TaskList matches) {
+        showLine();
+        System.out.println("Your matching tasks, here are:");
+        for (int i = 0; i < matches.size(); i++) {
+            System.out.println((i + 1) + ". " + matches.get(i));
+        }
+        showLine();
+    }
+
     /**
      * Closes the scanner.
      */

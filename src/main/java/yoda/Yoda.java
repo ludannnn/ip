@@ -112,6 +112,12 @@ public class Yoda {
                 }
                 break;
 
+                case FIND: {
+                    TaskList matches = tasks.find(command.desc);
+                    ui.showMatches(matches);
+                }
+                break;
+
                 case UNKNOWN:
                     ui.showUnknown();
                     break;
