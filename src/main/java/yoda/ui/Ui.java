@@ -1,9 +1,9 @@
 package yoda.ui;
 
-import java.util.Scanner;
 import yoda.task.Task;
 import yoda.task.TaskList;
 
+import java.util.Scanner;
 
 
 /**
@@ -14,9 +14,12 @@ public class Ui {
 
     /**
      * Creates a UI that reads from the given scanner.
+     *
      * @param scanner input source (e.g., new Scanner(System.in))
      */
-    public Ui(Scanner scanner) { this.scanner = scanner; }
+    public Ui(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     /**
      * Prints out welcome message
@@ -32,15 +35,20 @@ public class Ui {
 
     /**
      * Reads one line from input and trims it.
+     *
      * @return the trimmed line (may be empty)
      */
-    public String readCommand() { return scanner.nextLine().trim(); }
+    public String readCommand() {
+        return scanner.nextLine().trim();
+    }
 
     /**
      * Prints out a straight line made from '_'
      * as a demarkation
      */
-    public void showLine() { System.out.println("_".repeat(61)); }
+    public void showLine() {
+        System.out.println("_".repeat(61));
+    }
 
     /**
      * Prints out the current TaskList with 1 based numbering
@@ -56,8 +64,10 @@ public class Ui {
         showLine();
     }
 
-    /** Prints the confirmation for an added task.
-     * @param t the task added
+    /**
+     * Prints the confirmation for an added task.
+     *
+     * @param t        the task added
      * @param newCount total tasks after adding
      */
     public void showAdded(Task t, int newCount) {
@@ -68,28 +78,36 @@ public class Ui {
         showLine();
     }
 
-    /** Prints the confirmation for marking a task done. */
+    /**
+     * Prints the confirmation for marking a task done.
+     */
     public void showMarked(Task t) {
         showLine();
         System.out.println("Marked this task as done, I have:\n" + t);
         showLine();
     }
 
-    /** Prints the confirmation for unmarking a task. */
+    /**
+     * Prints the confirmation for unmarking a task.
+     */
     public void showUnmarked(Task t) {
         showLine();
         System.out.println("not done yet, is this task:\n" + t);
         showLine();
     }
 
-    /** Prints the confirmation for deleting a task. */
+    /**
+     * Prints the confirmation for deleting a task.
+     */
     public void showDeleted(Task t) {
         showLine();
         System.out.println("Deleted this task, I have:\n" + t);
         showLine();
     }
 
-    /** Prints the fallback for unknown commands. */
+    /**
+     * Prints the fallback for unknown commands.
+     */
     public void showUnknown() {
         showLine();
         System.out.println("What you are trying to say, I do not understand.");
@@ -98,6 +116,7 @@ public class Ui {
 
     /**
      * Prints an error block with the given message.
+     *
      * @param msg human-readable error message
      */
     public void showError(String msg) {
@@ -106,11 +125,17 @@ public class Ui {
         showLine();
     }
 
-    /** Prints the farewell line. */
+    /**
+     * Prints the farewell line.
+     */
     public void showBye() {
         System.out.println("Farewell, I bid you.");
     }
 
-    /** Closes the scanner. */
-    public void close() { scanner.close(); }
+    /**
+     * Closes the scanner.
+     */
+    public void close() {
+        scanner.close();
+    }
 }

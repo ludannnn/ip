@@ -7,28 +7,23 @@ import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
 
-/** A task that spans a start and end date/time with pretty/ISO representations. */
+/**
+ * A task that spans a start and end date/time with pretty/ISO representations.
+ */
 public class EventTask extends Task {
-    private final String startPretty;
-    private final String endPretty;
-    private final String startIso;
-    private final String endIso;
-
     private static final DateTimeFormatter OUT_DATE =
             DateTimeFormatter.ofPattern("MMM d yyyy", Locale.ENGLISH);
     private static final DateTimeFormatter OUT_DATETIME =
             DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm", Locale.ENGLISH);
-
     //for date-only inputs
-    private static final DateTimeFormatter[] DATE_PATTERNS = new DateTimeFormatter[] {
+    private static final DateTimeFormatter[] DATE_PATTERNS = new DateTimeFormatter[]{
             DateTimeFormatter.ISO_LOCAL_DATE,               // 2019-12-02
             DateTimeFormatter.ofPattern("d/M/uuuu"),        // 2/12/2019
             DateTimeFormatter.ofPattern("d-M-uuuu"),        // 2-12-2019
             DateTimeFormatter.ofPattern("MMM d uuuu", Locale.ENGLISH)
     };
-
     //for date+time inputs
-    private static final DateTimeFormatter[] DATETIME_PATTERNS = new DateTimeFormatter[] {
+    private static final DateTimeFormatter[] DATETIME_PATTERNS = new DateTimeFormatter[]{
             DateTimeFormatter.ISO_LOCAL_DATE_TIME,          // 2019-12-02T18:00
             DateTimeFormatter.ofPattern("d/M/uuuu HHmm"),   // 2/12/2019 1800
             DateTimeFormatter.ofPattern("d/M/uuuu HH:mm"),  // 2/12/2019 18:00
@@ -36,12 +31,17 @@ public class EventTask extends Task {
             DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm"),// 2019-12-02 18:00
             DateTimeFormatter.ofPattern("MMM d uuuu, HH:mm", Locale.ENGLISH) // Dec 2 2019, 18:00
     };
+    private final String startPretty;
+    private final String endPretty;
+    private final String startIso;
+    private final String endIso;
 
     /**
      * Creates an event with start and end date/time.
-     * @param desc description of the event
+     *
+     * @param desc       description of the event
      * @param startInput start date/time string
-     * @param endInput end date/time string
+     * @param endInput   end date/time string
      * @throws IllegalArgumentException if either input is blank or cannot be parsed
      */
     public EventTask(String desc, String startInput, String endInput) {
@@ -57,29 +57,8 @@ public class EventTask extends Task {
     }
 
     /**
-     * Returns the display form, e.g. "[E][ ] meeting (from: Dec 2 2019, 18:00 to: Dec 2 2019, 20:00)".
-     * @return formatted string for UI display
-     */
-    @Override
-    public String toString(){
-        return "[E]" + "[" + this.getStatusIcon() + "] " + this.description +
-                " (from: " + this.startPretty + " to: " + this.endPretty + ")";
-    }
-
-    /**
-     * Serializes this event to a single save line:
-     * E | <0|1> | <desc> | <start-ISO> | <end-ISO>
-     * @return pipe-separated save line
-     */
-    @Override
-    public String toSaveLine() {
-        return "E | " + (isDone ? 1 : 0) + " | " + description + " | " + startIso + " | " + endIso;
-    }
-
-    //helper functions
-
-    /**
      * Parses a date/time string into pretty and ISO forms.
+     *
      * @param input input string to parse
      * @return array of length 2: [pretty, iso]
      * @throws IllegalArgumentException if input is blank or unparsable
@@ -91,7 +70,7 @@ public class EventTask extends Task {
 
         LocalDateTime ldt = tryParseDateTime(input);
         if (ldt != null) {
-            return new String[] {
+            return new String[]{
                     ldt.format(OUT_DATETIME),
                     ldt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)   // 2019-12-02T18:00
             };
@@ -99,7 +78,7 @@ public class EventTask extends Task {
 
         LocalDate ld = tryParseDate(input);
         if (ld != null) {
-            return new String[] {
+            return new String[]{
                     ld.format(OUT_DATE),
                     ld.format(DateTimeFormatter.ISO_LOCAL_DATE)         // 2019-12-02
             };
@@ -110,15 +89,45 @@ public class EventTask extends Task {
 
     private static LocalDateTime tryParseDateTime(String s) {
         for (DateTimeFormatter f : DATETIME_PATTERNS) {
-            try { return LocalDateTime.parse(s, f); } catch (DateTimeParseException ignored) {}
+            try {
+                return LocalDateTime.parse(s, f);
+            } catch (DateTimeParseException ignored) {
+            }
         }
         return null;
     }
 
+    //helper functions
+
     private static LocalDate tryParseDate(String s) {
         for (DateTimeFormatter f : DATE_PATTERNS) {
-            try { return LocalDate.parse(s, f); } catch (DateTimeParseException ignored) {}
+            try {
+                return LocalDate.parse(s, f);
+            } catch (DateTimeParseException ignored) {
+            }
         }
         return null;
+    }
+
+    /**
+     * Returns the display form, e.g. "[E][ ] meeting (from: Dec 2 2019, 18:00 to: Dec 2 2019, 20:00)".
+     *
+     * @return formatted string for UI display
+     */
+    @Override
+    public String toString() {
+        return "[E]" + "[" + this.getStatusIcon() + "] " + this.description +
+                " (from: " + this.startPretty + " to: " + this.endPretty + ")";
+    }
+
+    /**
+     * Serializes this event to a single save line:
+     * E | <0|1> | <desc> | <start-ISO> | <end-ISO>
+     *
+     * @return pipe-separated save line
+     */
+    @Override
+    public String toSaveLine() {
+        return "E | " + (isDone ? 1 : 0) + " | " + description + " | " + startIso + " | " + endIso;
     }
 }
