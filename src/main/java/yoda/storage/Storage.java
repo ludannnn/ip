@@ -1,18 +1,26 @@
 package yoda.storage;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
 import yoda.task.Task;
 
-/** Loads and saves tasks to a UTF-8 text file (data/yoda.txt). */
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Loads and saves tasks to a UTF-8 text file (data/yoda.txt).
+ */
 public class Storage {
     private final Path file;
 
 
-    /** Creates a storage that uses the file at data/yoda.txt. */
+    /**
+     * Creates a storage that uses the file at data/yoda.txt.
+     */
     public Storage() {
         this.file = Paths.get("data", "yoda.txt");
     }
