@@ -34,6 +34,7 @@ public class TaskList {
      * @throws IndexOutOfBoundsException if {@code idx} is invalid
      */
     public Task get(int idx) {
+        assert idx >= 0 && idx < tasks.size() : "Bad index: " + idx;
         return tasks.get(idx);
     }
 
@@ -43,7 +44,9 @@ public class TaskList {
      * @param t task to add
      */
     public void add(Task t) {
+        int before = tasks.size();
         tasks.add(t);
+        assert tasks.size() == before + 1 : "Size didn't increase after add";
     }
 
     /**
