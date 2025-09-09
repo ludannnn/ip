@@ -102,6 +102,8 @@ public class Yoda {
                     if (idx < 0 || idx >= tasks.size()) throw new IndexOutOfBoundsException();
                     Task deleted = tasks.remove(idx);
                     storage.save(tasks.asList());
+                    int old = tasks.size();
+                    assert tasks.size() < old : "Size did not decrease after remove";
                     return line()+"\nDeleted this task, I have:\n"+deleted+"\n"+line();
                 }
 
@@ -118,6 +120,7 @@ public class Yoda {
                 }
 
                 default:
+                    assert false : "Unreachable command: " + command.type;
                     return line()+"\nWhat you are trying to say, I do not understand.\n"+line();
                 }
 

@@ -21,6 +21,7 @@ public class Parser {
      * @throws NumberFormatException    if an index argument is not a number
      */
     public static Command parse(String line) {
+        assert line != null : "Input line must not be null";
         if (line.isBlank()) return Command.unknown();
 
         String[] parts = line.split("\\s+", 2);
