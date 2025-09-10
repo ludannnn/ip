@@ -11,6 +11,8 @@ import yoda.task.TaskList;
 import yoda.task.ToDoTask;
 import yoda.ui.Ui;
 
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,6 +32,23 @@ public class Yoda {
 
     public boolean shouldExit() {
         return this.shouldExit;
+    }
+
+    private String loadHelp() {
+        try (InputStream is = getClass().getResourceAsStream("/help/help.txt")) {
+            if (is == null) {
+                return """
+                       _______________________
+                       Help page missing, it is.
+                       Available commands (brief):
+                       list | todo | deadline | event | mark | unmark | delete | find | bye
+                       _______________________""";
+            }
+            byte[] bytes = is.readAllBytes();
+            return new String(bytes, StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            return "Unable to load help: " + e.getMessage();
+        }
     }
 
     private static String line() { return "_".repeat(40); }
@@ -117,6 +136,10 @@ public class Yoda {
                     }
                     sb.append(line());
                     return sb.toString();
+                }
+
+                case HELP: {
+                    return loadHelp();
                 }
 
                 default:

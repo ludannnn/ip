@@ -53,5 +53,7 @@ public class Command {
         return new Command(Type.DELETE, null, null, null, null, idx);
     }
 
-    public enum Type {BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN}
+    public static Command help() { return new Command(Type.HELP, null, null, null, null, null); }
+
+    public enum Type {BYE, LIST, TODO, DEADLINE, EVENT, MARK, UNMARK, DELETE, FIND, UNKNOWN, HELP}
 }
