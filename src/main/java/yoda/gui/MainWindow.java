@@ -24,6 +24,8 @@ public class MainWindow extends AnchorPane {
     private TextField userInput;
     @FXML
     private Button sendButton;
+    @FXML
+    private Button helpButton;
 
     private Yoda yoda;
 
@@ -52,12 +54,20 @@ public class MainWindow extends AnchorPane {
         String response = yoda.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, yodaImage)
+                DialogBox.getYodaDialog(response, yodaImage)
         );
         userInput.clear();
 
         if (yoda.shouldExit()) {
             Platform.exit();
         }
+    }
+
+    @FXML
+    private void handleHelp() {
+        String response = yoda.getResponse("help");
+        dialogContainer.getChildren().add(
+                DialogBox.getYodaDialog(response, yodaImage)
+        );
     }
 }

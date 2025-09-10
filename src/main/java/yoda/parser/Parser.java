@@ -81,6 +81,10 @@ public class Parser {
             return Command.find(arg);
         }
 
+        case "help": {
+            return Command.help();
+        }
+
         default:
             return Command.unknown();
         }
