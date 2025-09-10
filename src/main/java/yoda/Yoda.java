@@ -41,7 +41,7 @@ public class Yoda {
         try {
             Command command = Parser.parse(in);
 
-            switch (command.type) {
+                switch (command.type) {
                 case BYE:
                     shouldExit = true;
                     return "Farewell, I bid you.";
