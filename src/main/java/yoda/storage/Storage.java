@@ -47,7 +47,6 @@ public class Storage {
             }
             return tasks;
         } catch (IOException e) {
-            // first run / corrupted file handling can be improved later
             return new ArrayList<>();
         }
     }

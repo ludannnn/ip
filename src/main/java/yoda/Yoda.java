@@ -1,6 +1,5 @@
 package yoda;
 
-
 import yoda.parser.Command;
 import yoda.parser.Parser;
 import yoda.storage.Storage;
@@ -9,12 +8,9 @@ import yoda.task.EventTask;
 import yoda.task.Task;
 import yoda.task.TaskList;
 import yoda.task.ToDoTask;
-import yoda.ui.Ui;
-
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Yoda {
     private Storage storage;
@@ -56,11 +52,10 @@ public class Yoda {
     public String getResponse(String input) {
         String in = input == null ? "" : input.trim();
         if (in.isEmpty()) return "";
-
         try {
             Command command = Parser.parse(in);
-
                 switch (command.type) {
+
                 case BYE:
                     shouldExit = true;
                     return "Farewell, I bid you.";
