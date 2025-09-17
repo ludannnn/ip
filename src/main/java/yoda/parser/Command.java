@@ -2,8 +2,8 @@ package yoda.parser;
 
 public class Command {
     public final Type type;
-    public final String desc, by, from, to; // for add-type commands
-    public final Integer index;             // 0-based for mark/unmark/delete
+    public final String desc, by, from, to;
+    public final Integer index;
     private Command(Type t, String desc, String by, String from, String to, Integer index) {
         this.type = t;
         this.desc = desc;
