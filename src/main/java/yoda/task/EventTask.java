@@ -8,7 +8,7 @@ import java.util.Locale;
 
 
 /**
- * A task that spans a start and end date/time with pretty/ISO representations.
+ * A task that spans a start and end date/time stores both pretty/ISO representations.
  */
 public class EventTask extends Task {
     private static final DateTimeFormatter OUT_DATE =
