@@ -15,3 +15,6 @@ Date examples:
 - 2019-12-02
 - 2/12/2019 1800
 - 2019-12-02 18:00
+
+Here is a rough guide on how to type commands
+into the Yoda Chatbot!
