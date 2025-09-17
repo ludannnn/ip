@@ -1,3 +1,6 @@
 E | 0 | meeting | 2020-02-20 | 2022-02-22
 T | 0 | assignment
 T | 0 | screenshot
+T | 0 | homework
+T | 0 | d
+T | 0 | homework
